@@ -40,6 +40,18 @@ class UsersController {
     }
   }
 
+  async refreshToken(request: Request, response: Response, next: NextFunction) {
+    try {
+      const { refreshToken } = request.body;
+
+      const result = await this.usersService.refreshToken(refreshToken);
+
+      return response.status(200).json(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async update(request: Request, response: Response, next: NextFunction) {
     const { name, oldPassword, newPassword } = request.body;
     const { user_id } = request;
